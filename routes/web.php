@@ -13,6 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('/pertanyaan', 'PertanyaanController');
+Route::resource('/jawaban', 'JawabanController');
