@@ -1,54 +1,55 @@
 @extends('main')
 
 @section('content')
-<div class="card gedf-card mb-3 shadow bg-white rounded ml-3 mr-3">
-    <div class="card-header pb-2 pt-2">
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="mr-2">
-                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                </div>
-                <div class="ml-2">
-                    <div class="h6 m-0">nama</div>
-                    <div class="h7 text-muted">email</div>
-                </div>
-            </div>
-            <div>
-                <div class="dropdown">
-                    <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
-                        <div class="h6 dropdown-header">Options</div>
-                        <a class="dropdown-item" href="#">Share</a>
-                        <a class="dropdown-item" href="#">Report</a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
+@section('title', 'All Questions')
+
+@foreach ($questions as $question)
+<div class="card gedf-card mb-3 shadow bg-white rounded ml-3 mr-3 shadow-lg">
+    <div class="card-header pb-1">
+        <a class="card-link text-muted" href="#">
+            <i class="fa fa-link">
+                {{ $question->title }}
+            </i>
+        </a>
     </div>
     <div class="card-body pb-3 pt-3">
-        <a class="card-link" href="#">
-            <h5 class="card-title">judul</h5>
-        </a>
-
         <p class="card-text">
-            tanggal
+            {{ substr($question->body , 0, 15) }} {{ strlen($question->body) > 15 ? "..." : "" }}
         </p>
     </div>
     <div class="card-footer mr-0">
         <div class="row">
-            <div class="col-md-11">
+            <div class="col-md-9">
                 <i class="fa fa-clock text-muted"></i>
-                <span class="laed inline text-muted">Published At:
-                    tanggal
+                <span class="laed inline text-muted">Published at:
+                    {{ date('M j, Y h:i a', strtotime($question->created_at)) }}
             </div>
-            <div class="col-md-1">
-                <a href="#" class="card-link"><i class="fa fa-share"></i> Answer</a>
+            <div class="col-md-3 text-right">
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a href="{{ route('questions.edit', $question->id) }}">
+                        <button type="button" class="btn btn-primary-outline card-link text-primary inline">
+                            <span class="fa fa-terminal card-link" aria-hidden="true"></span> Edit
+                        </button>
+                    </a>
+                    <form action="{{ route('questions.delete', $question->id) }}" method="POST">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="btn btn-primary-outline card-link text-danger inline">
+                            <span class="fa fa-trash card-link" aria-hidden="true"></span> Delete
+                        </button>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
+@endforeach
+<div class="d-flex">
+    <div class="mx-auto">
+        {!! $questions->links() !!}
+    </div>
+</div>
+
 @endsection
