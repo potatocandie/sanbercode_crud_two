@@ -13,5 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/pertanyaan', 'PertanyaanController');
-Route::resource('/jawaban', 'JawabanController');
+Route::get('/pertanyaan', 'QuestionController@index');
