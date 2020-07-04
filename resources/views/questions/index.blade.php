@@ -7,7 +7,7 @@
 @foreach ($questions as $question)
 <div class="card gedf-card mb-3 shadow bg-white rounded ml-3 mr-3 shadow-lg">
     <div class="card-header pb-1">
-        <a class="card-link text-muted" href="#">
+        <a class="card-link text-muted" href="{{ route('questions.show', $question->id) }}">
             <i class="fa fa-link">
                 {{ $question->title }}
             </i>
@@ -20,13 +20,18 @@
     </div>
     <div class="card-footer mr-0">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-7">
                 <i class="fa fa-clock text-muted"></i>
                 <span class="laed inline text-muted">Published at:
                     {{ date('M j, Y h:i a', strtotime($question->created_at)) }}
             </div>
-            <div class="col-md-3 text-right">
+            <div class="col-md-5 text-right">
                 <div class="btn-group" role="group" aria-label="Basic example">
+                    <a href="{{ route('answers.index', $question->id) }}">
+                        <button type="button" class="btn btn-primary-outline card-link text-success inline">
+                            <span class="fa fa-align-justify card-link" aria-hidden="true"></span> See Answers Only
+                        </button>
+                    </a>
                     <a href="{{ route('questions.edit', $question->id) }}">
                         <button type="button" class="btn btn-primary-outline card-link text-primary inline">
                             <span class="fa fa-terminal card-link" aria-hidden="true"></span> Edit

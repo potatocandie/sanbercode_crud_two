@@ -20,6 +20,9 @@
                         <textarea type="text" class="form-control border-success" id="body" name="body"
                             placeholder="Write your question here ..." rows="10">{{ $question->body }}</textarea>
                     </div>
+                    <a href="{{ route('questions.index') }}">
+                        <button type="button" class="btn btn-default border-danger">Cancel Update</button>
+                    </a>
                     <button type="submit" class="btn btn-default border-success">Update Question</button>
                 </form>
             </div>

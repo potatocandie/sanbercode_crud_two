@@ -10,7 +10,7 @@ class QuestionController extends Controller
 {
     public function index()
     {
-        $questions = Question::orderBy('id', 'desc')->paginate(3);
+        $questions = Question::orderBy('updated_at', 'desc')->paginate(3);
         // return $questions;
         return view('questions.index')->withQuestions($questions);
     }
@@ -36,6 +36,13 @@ class QuestionController extends Controller
         Session::flash('success', 'Your question has been saved!');
 
         return redirect()->route('questions.index');
+    }
+
+    public function show($id)
+    {
+        $question = Question::find($id);
+        $answers = $question->answers()->orderBy('created_at', 'desc')->get();
+        return view('questions.show')->withQuestion($question)->withAnswers($answers);
     }
 
     public function edit($id)
